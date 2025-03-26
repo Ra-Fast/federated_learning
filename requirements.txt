@@ -3,3 +3,5 @@ flwr-datasets[vision]
 torch
 torchvision
 matplotlib
+hydra-core
+ray
