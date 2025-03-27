@@ -25,7 +25,7 @@ def main(cfg: DictConfig):
                                        fraction_evaluate=0.00001,
                                        min_evaluate_clients=cfg.num_clients_per_round_eval,
                                        min_available_clients=cfg.num_clients,
-                                       on_evaluate_config_fn=get_on_fit_config(cfg.config_fit),
+                                       on_fit_config_fn=get_on_fit_config(cfg.config_fit),
                                        evaluate_fn=get_evaluate_fn(cfg.num_classes, testloader)
                                        )
 

@@ -22,7 +22,7 @@ class FlowerClient(fl.client.NumPyClient):
 
     def set_parameters(self, parameters):
         params_dict=zip(self.model.state_dict().keys(), parameters)
-        state_dict=OrderedDict({k: torch.tensor(v) for k, v in params_dict})
+        state_dict=OrderedDict({k: torch.Tensor(v) for k, v in params_dict})
         self.model.load_state_dict(state_dict,strict=True)
 
     def get_parameters(self, config:Dict[str, Scalar]):
@@ -33,14 +33,13 @@ class FlowerClient(fl.client.NumPyClient):
         self.set_parameters(parameters)
 
         lr=config['lr']
-        lr=0.01
         momentum=config['momentum']
         epochs=config['local_epochs']
 
         optim=torch.optim.SGD(self.model.parameters(), lr=lr, momentum=momentum)
 
         # do local training
-        train(self.model, self.trainloader, optim,self.device)
+        train(self.model,trainloader=self.trainloader,optimizer=optim, epochs=epochs, device=self.device)
 
         return self.get_parameters({}), len(self.trainloader), {}
     
