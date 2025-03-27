@@ -31,6 +31,13 @@ def main(cfg: DictConfig):
 
     ## 5. Start simulation
 
+    history=fl.simulation.start_simulation(
+        client_fn=client_fn,
+        num_clients=cfg.num_clients,
+        config=fl.server.ServerConfig(num_rounds=cfg.num_rounds),
+        strategy=strategy
+    )
+
     ## 6. Save your results
 
 

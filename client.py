@@ -33,6 +33,7 @@ class FlowerClient(fl.client.NumPyClient):
         self.set_parameters(parameters)
 
         lr=config['lr']
+        lr=0.01
         momentum=config['momentum']
         epochs=config['local_epochs']
 
@@ -41,7 +42,7 @@ class FlowerClient(fl.client.NumPyClient):
         # do local training
         train(self.model, self.trainloader, optim,self.device)
 
-        return self.get_parameters(), len(self.trainloader), {}
+        return self.get_parameters({}), len(self.trainloader), {}
     
     def evaluate(self, parameters: NDArray, config: Dict[str, Scalar]):
         self.set_parameters(parameters)
@@ -53,8 +54,8 @@ def generate_client_fn(trainloaders, valloaders, num_classes):
 
     def client_fn(cid: str):
 
-        return FlowerClient(trainloader=trainloaders(int(cid)),
-                            valloader=valloaders(int(cid)),
+        return FlowerClient(trainloader=trainloaders[int(cid)],
+                            valloader=valloaders[int(cid)],
                             num_classes=num_classes)
 
     return client_fn
