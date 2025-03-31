@@ -6,7 +6,7 @@ import flwr as fl
 
 from dataset import prepare_dateset
 from client import generate_client_fn
-from server import get_on_fit_config, get_evaluate_fn
+from server import get_evaluate_fn
 
 @hydra.main(config_path="conf", config_name="base", version_base=None)
 def main(cfg: DictConfig):
@@ -18,19 +18,21 @@ def main(cfg: DictConfig):
     trainloaders, validationloaders, testloader = prepare_dateset(cfg.num_clients, cfg.batch_size)
 
     ## 3. Define your clients
-    client_fn=generate_client_fn(trainloaders, validationloaders, cfg.num_classes)
+    client_fn=generate_client_fn(trainloaders, validationloaders, cfg.model)
 
     ## 4. Define your strategy
-    '''
-    strategy=fl.server.strategy.FedAvg(fraction_fit=0.00001, 
-                                       min_fit_clients=cfg.num_clients_per_round_fit,
-                                       fraction_evaluate=0.00001,
-                                       min_evaluate_clients=cfg.num_clients_per_round_eval,
-                                       min_available_clients=cfg.num_clients,
-                                       on_fit_config_fn=get_on_fit_config(cfg.config_fit),
-                                       evaluate_fn=get_evaluate_fn(cfg.num_classes, testloader)
-                                       )
-    '''
+    
+    # strategy=fl.server.strategy.FedAvg(fraction_fit=0.00001, 
+    #                                    min_fit_clients=cfg.num_clients_per_round_fit,
+    #                                    fraction_evaluate=0.00001,
+    #                                    min_evaluate_clients=cfg.num_clients_per_round_eval,
+    #                                    min_available_clients=cfg.num_clients,
+    #                                    on_fit_config_fn=get_on_fit_config(cfg.config_fit),
+    #                                    evaluate_fn=get_evaluate_fn(cfg.num_classes, testloader)
+    #                                    )
+    
+    
+    strategy=instantiate(cfg.strategy, evaluate_fn=get_evaluate_fn(cfg.model, testloader))
 
     ## 5. Start simulation
 

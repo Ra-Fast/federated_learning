@@ -11,6 +11,6 @@ config_fit:
   momentum: 0.9
   local_epochs: 1
 
-
 defaults:
   - strategy: fedavg
+  - model: net
