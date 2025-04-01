@@ -50,3 +50,11 @@ def test(net, testloader, device:str):
             correct+=(predicted==labels).sum().item()
     accuracy=correct/len(testloader.dataset)
     return loss, accuracy
+
+def model_to_parameters(model):
+    from flwr.common.parameter import ndarrays_to_parameters
+
+    ndarray=[val.cpu().numpy() for _, val in model.state_dict().items()]
+    parameters=ndarrays_to_parameters(ndarray)
+    print("Extrated model parameters!")
+    return parameters
