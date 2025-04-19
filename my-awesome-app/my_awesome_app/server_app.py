@@ -63,7 +63,7 @@ def server_fn(context: Context):
         min_available_clients=2,
         initial_parameters=parameters,
         evaluate_metrics_aggregation_fn=weights_average,
-        #fit_metrics_aggregation_fn=handle_fit_metrics,
+        fit_metrics_aggregation_fn=handle_fit_metrics,
         #on_fit_config_fn=on_fit_config,
         evaluate_fn=get_evaluate_fn(testloader, device='cpu'),
     )

@@ -1,7 +1,6 @@
 """my-awesome-app: A Flower / PyTorch app."""
 
 import torch
-from random import random
 from flwr.client import ClientApp, NumPyClient
 from flwr.common import Context, ConfigRecord
 from my_awesome_app.task import Net, get_weights, load_data, set_weights, test, train
@@ -31,18 +30,21 @@ class FlowerClient(NumPyClient):
             #config['lr'],
             self.device,
         )
-        return (
-            get_weights(self.net),
-            len(self.trainloader.dataset),
-            {"train_loss": train_loss, "random_num": random()},
-        )
 
-        print(self.client_state)
+        # print(self.client_state)
         fit_metrics = self.client_state.config_records["fit_metrics"]
         if "train_loss_hist" not in fit_metrics:
             fit_metrics["train_loss_hist"] = [train_loss]
         else:
             fit_metrics["train_loss_hist"].append(train_loss)
+
+        return (
+            get_weights(self.net),
+            len(self.trainloader.dataset),
+            {"train_loss": train_loss},
+        )
+
+
 
 
     def evaluate(self, parameters, config):

@@ -53,10 +53,10 @@ class CustomFedAvg(FedAvg):
         self.results_to_save[server_round] = my_results
 
         # Save evaluation results in a JSON file
-        with open("results.json", "w") as json_file:
+        with open("result.json", "w") as json_file:
             json.dump(self.results_to_save, json_file,indent=4)
 
         # Log to W&B
-        # wandb.log(my_results,step=server_round)
+        wandb.log(my_results,step=server_round)
         return loss, metrics
     
