@@ -4,3 +4,8 @@ data/
 outputs/
 multirun/
 federated_learning.code-workspace
+flower-tutorial/
+wandb/
+*.wandb
+*.pyc
+*.pkl
