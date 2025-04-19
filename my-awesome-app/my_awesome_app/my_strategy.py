@@ -19,6 +19,8 @@ class CustomFedAvg(FedAvg):
 
         # Log those same metrics to Weights & Biases
         name=datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+        strategy_name = self.__class__.__name__
+        name = f"{strategy_name}_{name}"
         wandb.init(project="flower-simulation-tutorial", name=f"custom-strategy-{name}")
 
     def aggregate_fit(self, 
@@ -55,6 +57,6 @@ class CustomFedAvg(FedAvg):
             json.dump(self.results_to_save, json_file,indent=4)
 
         # Log to W&B
-        wandb.log(my_results,step=server_round)
+        # wandb.log(my_results,step=server_round)
         return loss, metrics
     
