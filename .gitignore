@@ -9,3 +9,7 @@ wandb/
 *.wandb
 *.pyc
 *.pkl
+*.json
+*.log
+results.json
+.gitignore

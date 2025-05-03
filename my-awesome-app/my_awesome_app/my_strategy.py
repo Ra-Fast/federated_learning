@@ -1,7 +1,6 @@
 from flwr.common import FitRes, Parameters, parameters_to_ndarrays
 from flwr.server.client_proxy import ClientProxy
-from flwr.server.strategy import FedAvg
-
+from flwr.server.strategy import FedAvg,FedAvgM,QFedAvg
 import torch
 import json
 import wandb
@@ -20,6 +19,7 @@ class CustomFedAvg(FedAvg):
         # Log those same metrics to Weights & Biases
         name=datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
         strategy_name = self.__class__.__name__
+        #strategy_name = "QFedAvg_lr_0_5_q_param_1"
         name = f"{strategy_name}_{name}"
         wandb.init(project="flower-simulation-tutorial", name=f"custom-strategy-{name}")
 

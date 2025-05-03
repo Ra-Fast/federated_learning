@@ -52,7 +52,7 @@ def server_fn(context: Context):
     parameters = ndarrays_to_parameters(ndarrays)
 
     # Load global test set
-    testset=load_dataset("uoft-cs/cifar10")["test"]
+    testset=load_dataset("RaFast/RepoMED")["test"]
     testloader=DataLoader(testset.with_transform(get_transforms()), batch_size=32)
     
 
@@ -66,6 +66,10 @@ def server_fn(context: Context):
         fit_metrics_aggregation_fn=handle_fit_metrics,
         #on_fit_config_fn=on_fit_config,
         evaluate_fn=get_evaluate_fn(testloader, device='cpu'),
+        #server_momentum=0.9,
+        #server_learning_rate=0.05,
+        q_param=1.0,
+        qffl_learning_rate=0.5,
     )
     config = ServerConfig(num_rounds=num_rounds)
 
