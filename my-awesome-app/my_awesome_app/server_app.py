@@ -68,8 +68,8 @@ def server_fn(context: Context):
         evaluate_fn=get_evaluate_fn(testloader, device='cpu'),
         #server_momentum=0.9,
         #server_learning_rate=0.05,
-        q_param=1.0,
-        qffl_learning_rate=0.5,
+        # q_param=1.0,
+        # qffl_learning_rate=0.5,
     )
     config = ServerConfig(num_rounds=num_rounds)
 

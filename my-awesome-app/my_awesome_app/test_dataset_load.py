@@ -1,7 +1,7 @@
 from datasets import load_dataset
 
 # Cargar el dataset
-dataset = load_dataset("RaFast/RepoMED")
+dataset = load_dataset("RaFast/RepoMED_1")
 
 # Acceder a los conjuntos de entrenamiento y prueba
 train_dataset = dataset["train"]

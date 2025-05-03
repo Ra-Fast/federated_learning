@@ -99,7 +99,7 @@ class Net(nn.Module):
         self.dropout1 = nn.Dropout(0.7)
         self.fc2 = nn.Linear(512, 128)
         self.dropout2 = nn.Dropout(0.6)
-        self.fc3 = nn.Linear(128, 4)
+        self.fc3 = nn.Linear(128, 6)
 
     def forward(self, x):
         x = self.pool1(F.relu(self.bn1(self.conv1(x))))
@@ -135,7 +135,7 @@ def load_data(partition_id: int, num_partitions: int):
         #partitioner = DirichletPartitioner(num_partitions=num_partitions, partition_by="label", alpha=1.0)
         partitioner=IidPartitioner(num_partitions=num_partitions)
         fds = FederatedDataset(
-            dataset="RaFast/RepoMED",
+            dataset="RaFast/RepoMED_1",
             partitioners={"train": partitioner},
         )
     partition = fds.load_partition(partition_id)
