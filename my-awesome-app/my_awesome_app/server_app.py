@@ -52,7 +52,7 @@ def server_fn(context: Context):
     parameters = ndarrays_to_parameters(ndarrays)
 
     # Load global test set
-    testset=load_dataset("RaFast/RepoMED")["test"]
+    testset=load_dataset("RaFast/RepoMED_1")["test"]
     testloader=DataLoader(testset.with_transform(get_transforms()), batch_size=32)
     
 
